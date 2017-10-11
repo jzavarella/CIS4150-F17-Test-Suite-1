@@ -1,0 +1,3 @@
+#!/bin/sh
+
+./testcases/bin/cmulookup testcases/includes/full-dictionary testcases/includes/external_files/no-permissions.txt

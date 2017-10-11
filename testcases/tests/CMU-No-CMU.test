@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "BAR" | ./testcases/bin/cmulookup testcases/includes/doesnt-exist

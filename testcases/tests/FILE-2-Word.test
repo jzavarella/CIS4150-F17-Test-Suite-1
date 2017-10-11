@@ -1,0 +1,3 @@
+#!/bin/sh
+
+./testcases/bin/cmulookup testcases/includes/full-dictionary testcases/includes/external_files/two-word-found.txt

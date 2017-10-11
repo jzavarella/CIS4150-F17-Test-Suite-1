@@ -1,0 +1,43 @@
+#!/bin/sh
+
+PASSED=0
+FAILED=0
+EXECUTED=0
+# Executes each test in the test cases subdirectory with the extension .test
+for TEST in testcases/tests/*.test
+do
+
+  SCRIPT=`basename ${TEST}` # Get the base name of this particular test
+  EXPECTED=`echo ${SCRIPT} | sed -e 's/test$/expected/'` # Get the expected output file
+  OUTPUT=`echo ${SCRIPT} | sed -e 's/test$/output/'` # Get the expected output file
+
+  sh ${TEST} > testcases/output/${OUTPUT} 2> /dev/null
+
+  ((EXECUTED++))
+
+  if [ ! -f testcases/expected/${EXPECTED} ]
+  then
+    touch testcases/expected/${EXPECTED} # If the expected output does not exist. Make it
+  fi
+
+  if [ ! -f testcases/output/${OUTPUT} ]
+  then
+  	echo "${OUTPUT} DOES NOT EXIST"
+    continue
+  fi
+
+  if
+		cmp -s testcases/output/${OUTPUT} testcases/expected/${EXPECTED}
+	then
+		echo "PASS : ${TEST}"
+    ((PASSED++))
+	else
+		echo "FAIL : ${TEST}"
+    ((FAILED++))
+	fi
+done
+
+echo "\n==RESULTS=========="
+echo "Number of tests: ${EXECUTED}"
+echo "Number of passed tests: ${PASSED}"
+echo "Number of failed tests: ${FAILED}"
